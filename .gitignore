@@ -1,4 +1,7 @@
 # Logs
+api/.env
+api/node_modules
+
 logs
 *.log
 npm-debug.log*
