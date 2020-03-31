@@ -1,9 +1,14 @@
 const express=require("express");
 const bparser=require("body-parser");
-const mongoose=require("./config/database")
-const { User }=require("./models")
+const mongoose=require("./config/database");
+const { User }=require("./models");
+
+const { Login ,Access}  =require("./controllers/User")
 const app=express()
+
 app.use(bparser.json())
+
+
 
 
 app.get("/test", async (req,res)=>{
@@ -34,6 +39,12 @@ app.get("/test", async (req,res)=>{
 app.get("/",(req,res)=>{
    console.log("working");
 })
+
+
+
+Login(app);
+Access(app);
+
 app.listen(3000,()=>{
    console.log("server starting")
 })
