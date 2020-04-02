@@ -1,6 +1,23 @@
 const express=require("express");
 const bcrypt=require("bcryptjs");
+const jwt=require("jsonwebtoken");
 const {User}=require("../../models");
+
+
+
+let authenticate=async (req,res,next)=>{
+   let token=req.header("x-access-token");
+   let secret=User.getJWTSecret();
+   
+   jwt.verify(token,secret,(err,decoded)=>{
+      if(err){
+          res.status(404).send(err);
+      }else{
+         req.user_id=decoded._id;
+         next();
+      }
+   });
+}
 
 let verifyTokenMiddleware=async (req,res,next)=>{
    let req_id=req.header("_id");
@@ -42,4 +59,7 @@ module.exports=(app)=>{
          res.send(e);
       } 
    });
+
 }
+
+module.exports.authenticate=authenticate;

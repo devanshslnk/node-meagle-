@@ -3,7 +3,7 @@ const jwt=require("jsonwebtoken");
 const crypto=require("crypto");
 const bcrypt=require("bcryptjs");
 
-const jwtSecret="sbdcdcndkjfvdkdjnfvkndfkjvn"
+const jwtSecret="sbdcdcndkjfvdkdjnfvkndfkjvn";
 const userSchema=new mongoose.Schema({
    name:{
       type:String,
@@ -85,7 +85,9 @@ userSchema.methods.createSession= async function(){
 }
 
 
-
+userSchema.statics.getJWTSecret=function(){
+   return jwtSecret;
+}
 userSchema.statics.hasRefreshTokenExpired=function(expireAt){
    let currentTime=Date.now()/1000
    if(expireAt<currentTime){

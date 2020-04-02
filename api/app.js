@@ -1,13 +1,15 @@
 const express=require("express");
 const bparser=require("body-parser");
 const mongoose=require("./config/database");
-const { User }=require("./models");
 
+const { User }=require("./models");
 const { Login ,Access}  =require("./controllers/User")
+const {Upload}=require("./controllers/Memes");
+
 const app=express()
 
 app.use(bparser.json())
-
+app.use("/uploaded_memes",express.static('uploaded_memes'));
 
 
 
@@ -44,6 +46,7 @@ app.get("/",(req,res)=>{
 
 Login(app);
 Access(app);
+Upload(app);
 
 app.listen(3000,()=>{
    console.log("server starting")
