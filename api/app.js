@@ -9,11 +9,17 @@ const {Upload}=require("./controllers/Memes");
 const app=express()
 
 app.use(bparser.json())
+app.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*"); 
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   next();
+});
+
 app.use("/uploaded_memes",express.static('uploaded_memes'));
 
 
 
-app.get("/test", async (req,res)=>{
+app.get("/testing", async (req,res)=>{
 
    // const user=new User({
    //    name:"devansh",
@@ -36,7 +42,7 @@ app.get("/test", async (req,res)=>{
    // subscriptions.forEach((user)=>{
    //    console.log(user.name)
    // })
-   
+   res.json({status:"working"});
 })
 app.get("/",(req,res)=>{
    console.log("working");

@@ -88,6 +88,7 @@ userSchema.methods.createSession= async function(){
 userSchema.statics.getJWTSecret=function(){
    return jwtSecret;
 }
+
 userSchema.statics.hasRefreshTokenExpired=function(expireAt){
    let currentTime=Date.now()/1000
    if(expireAt<currentTime){
