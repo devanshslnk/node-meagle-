@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SignupService } from './signup.service';
+import { HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -8,15 +10,27 @@ import { SignupService } from './signup.service';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(private signupService:SignupService) { }
+  isLoggedIn=false;
+  constructor(private signupService:SignupService,private router:Router) { }
 
+  
   ngOnInit(): void {
   }
+  
+  userSignup(userData){
+    const username=userData.username;
+    const email=userData.email;
+    const password=userData.password;
+    const name=userData.name;
+    this.signupService.authentcation(username,email,password,name).subscribe((response:HttpResponse<any>)=>{
+      if(response.status==200){
+        this.signupService.setSession(response.body._id,response.headers.get("x-access-token"),response.headers.get("x-refresh-token"));
+        this.isLoggedIn=true;
+        this.router.navigate(["/home"]);
 
-  userSignup(event){
-    event.preventDefault();
-    const target=event.target;
-    const email=target.getElementById("username");
-    console.log(email);
+      }
+    });
+    
   }
+
 }

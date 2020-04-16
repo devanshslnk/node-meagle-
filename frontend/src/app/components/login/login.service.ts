@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
-
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SignupService {
-
+export class LoginService {
+  
   readonly ROOT_URL;
-  constructor(private http: HttpClient) {
-    this.ROOT_URL="http://localhost:3000"; 
-  }
 
-  authentcation(username:string,email:string,password:string,name:string){
+  constructor(private http:HttpClient) {
+    this.ROOT_URL="http://localhost:3000";
+   }
+
+  login(email:string,password:string){
     
-    return this.http.post("http://localhost:3000/signup",{username,email,password,name},{observe:'response'})
+    return this.http.post("http://localhost:3000/login",{email,password},{observe:'response'})
   }
 
   setSession(user_id,accessToken,refreshToken){
@@ -34,10 +34,5 @@ export class SignupService {
   logout(){
     this.removeSession();
   }
-
-
-
-  
-
 
 }

@@ -6,6 +6,7 @@ const {User}=require("../../models");
 module.exports=(app)=>{
    app.post("/signup", async (req,res)=>{
       const body=req.body;
+      console.log(req.body);
       const user=new User(body);
       const checkUser= await User.findOne({"username":body.username});
       if(!checkUser){
