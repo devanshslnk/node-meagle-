@@ -8,7 +8,7 @@ module.exports=(app)=>{
       const body=req.body;
       console.log(req.body);
       const user=new User(body);
-      const checkUser= await User.findOne({"username":body.username});
+      const checkUser= await User.findOne({"email":body.email});
       if(!checkUser){
          try{
 
@@ -21,7 +21,7 @@ module.exports=(app)=>{
             res.header("x-access-token",authToken).header("x-refresh-token",refreshToken).json({"_id":savedUser._id,"name":user.name,"email":user.email,"username":user.username});
          }catch(e){
             console.log(e);
-            res.json({"message":"error"})
+            res.status(401).json({"message":"email taken"});
          }
       }
    })
@@ -38,7 +38,7 @@ module.exports=(app)=>{
                   
                   res.header("x-access-token",authToken).header("x-refresh-token",refreshToken).json({"_id":queryUser._id,"name":queryUser.name,"email":queryUser.email,"username":queryUser.username});
                }else{
-                  res.json({"message":"wrong password"});
+                  res.status(401).json({"message":"wrong password"});
                }
 
             });

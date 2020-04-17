@@ -1,0 +1,6 @@
+<form (submit)="uploadMeme()">
+   <label>Select Image</label>
+   <input type="file" name="image" (change)="selectedImage($event)"/>
+   <button type="submit">Submit</button>
+   {{message}}
+</form>

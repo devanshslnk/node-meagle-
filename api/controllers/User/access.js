@@ -11,7 +11,7 @@ let authenticate=async (req,res,next)=>{
    
    jwt.verify(token,secret,(err,decoded)=>{
       if(err){
-          res.status(404).send(err);
+          res.status(401).send(err);
       }else{
          req.user_id=decoded._id;
          next();
@@ -24,7 +24,9 @@ let verifyTokenMiddleware=async (req,res,next)=>{
    let reqToken=req.header("x-refresh-token");
    try{
       const queryUser=await User.findOne({_id:req_id});
+
       if(queryUser){
+
          let sessionIsValid=false;
          req.user_id=queryUser._id;
          req.userObject=queryUser;
@@ -53,12 +55,17 @@ module.exports=(app)=>{
    app.get("/user/access-token",verifyTokenMiddleware,async (req,res)=>{
       try{
          const accessToken=await req.userObject.generateAuthToken(req.refreshToken);
-         res.header("x-acces-token",accessToken).header("x-refresh-token",req.refreshToken).json({"_id":req.userObject._id,"name":req.userObject.name,"email":req.userObject.email,"username":req.userObject.username});
+         
+         res.header("x-access-token",accessToken).header("x-refresh-token",req.refreshToken).json({"_id":req.userObject._id,"name":req.userObject.name,"email":req.userObject.email,"username":req.userObject.username});
       }catch(e){
          console.log(e);
          res.send(e);
       } 
    });
+
+   app.get("/testtoken",authenticate,(req,res)=>{
+      res.send("success");
+   })
 
 }
 

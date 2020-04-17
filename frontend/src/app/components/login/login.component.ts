@@ -20,11 +20,11 @@ export class LoginComponent implements OnInit {
     const email=data.email;
     const password=data.password;
     this.loginService.login(email,password).subscribe((response:HttpResponse<any>)=>{
-      console.log(response);
+      
       if(response.status==200){
         this.loginService.setSession(response.body._id,response.headers.get("x-access-token"),response.headers.get("x-refresh-token"));
         this.router.navigate(["/home"]);
-        
+
       }
     });
   }

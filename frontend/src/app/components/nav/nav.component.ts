@@ -14,7 +14,7 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     const loginCheck=localStorage.getItem("user_id");
+     const loginCheck=localStorage.getItem("_id");
      
      if(loginCheck===null){
       this.loginStatus=false; 
