@@ -1,4 +1,4 @@
-const {Meme}=require("../../models");
+const {User,Meme}=require("../../models");
 
 const authenticate=require("../User/access").authenticate;
 
@@ -17,7 +17,24 @@ module.exports=(app)=>{
 
       }
 
-   });   
+   });
+
+   app.patch("/api/action/like",async (req,res)=>{
+      try{
+         const imageId=req.body.imageId;
+         const userId=req.body._id;
+
+         const likedMeme=await Meme.update({"imageId":imageId},{"$push":{likes:{status:true,uid:userId}}})
+         console.lof(likedMeme);
+         res.json({"message":"liked"});
+         
+
+
+      }catch(e){
+
+      }
+   })
+      
    
 
 }

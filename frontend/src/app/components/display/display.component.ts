@@ -35,4 +35,8 @@ export class DisplayComponent implements OnInit {
     console.log("liked");
   }
 
+  onComment(comment:string,id:string){
+    console.log(comment,id);
+
+  }
 }

@@ -22,4 +22,9 @@ export class DisplayService {
 
     }
   }
+  onLike(imageId:string){
+    const _id=localStorage.getItem("_id");
+    return this.http.post(`${this.ROOT_URL}/api/action/like`,{_id,imageId},{observe:"response"});
+
+  }
 }
