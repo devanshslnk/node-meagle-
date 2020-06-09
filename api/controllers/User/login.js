@@ -1,7 +1,7 @@
 const express=require("express");
 const bcrypt=require("bcryptjs");
 const {User}=require("../../models");
-
+const authenticate=require("./access").authenticate;
 
 module.exports=(app)=>{
    app.post("/signup", async (req,res)=>{
@@ -42,13 +42,44 @@ module.exports=(app)=>{
                }
 
             });
+         }else{
+            res.send(404).json({"message":"invalid email"});
+            
          }
       }catch(e){
          console.log("error in login",e);
-         res.json({"message":"error"});
+         res.status(500).send(e);
 
       }
    })
+
+
+   app.post("/user/edit",authenticate,async (req,res)=>{
+      try
+      {      
+         const queryUser=await User.findOneAndUpdate({_id:req.user_id},req.body);
+         res.json({_id:queryUser._id,email:queryUser.email});
+
+      }catch(e){
+         console.log(e);
+
+      }
+   });
+
+   app.get("/logout/:id",authenticate,async (req,res)=>{
+      const refreshToken=req.header("x-refresh-token");
+      // console.log(req.params.id);
+      // console.log(refreshToken);
+      try{
+         const removedSession=await User.update({_id:req.params.id},{"$pull":{sessions:{token:refreshToken}}});
+         console.log(removedSession);
+         res.json({"message":"user logged out "});
+      }catch(e){
+         // console.log(e);
+         // res.send(e);
+         res.status(401).send(e);
+      } 
+   });   
 }
 
 

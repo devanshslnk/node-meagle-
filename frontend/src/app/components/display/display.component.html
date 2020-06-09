@@ -1,0 +1,6 @@
+<div *ngFor="let meme of memeData">
+   <img src="{{ROOT_MEME_URL}}/{{meme.path}}" style="height:300px;width:300px"/>
+   <button (click)="onLikeClick(meme.imageId)">Like</button>
+   <!-- <p>{{meme.path}}</p> -->
+
+</div>

@@ -42,12 +42,12 @@ let verifyTokenMiddleware=async (req,res,next)=>{
          if(sessionIsValid===true){
             next();
          }else{
-            res.json({"message":"session-expired"});
+            res.status(401).json({"message":"session-expired"});
          }
       }
    }catch(e){
       console.log(e);
-      res.status(404).send(e);
+      res.status(401).send(e);
    }
 }
 
@@ -65,6 +65,16 @@ module.exports=(app)=>{
 
    app.get("/testtoken",authenticate,(req,res)=>{
       res.send("success");
+   })
+
+   app.get("/user/profile/:id",authenticate,async(req,res)=>{
+      try{
+         const user=await User.findOne({_id:req.params.id});
+         res.json({username:user.username,email:user.email,name:user.name});
+      }catch(e){
+         res.status(404).send(e);
+
+      }
    })
 
 }

@@ -50,7 +50,7 @@ module.exports=(app)=>{
          res.json({path:"http://localhost:3000/uploaded_memes/"+req.file.filename,image_id:savedMeme._id});
 
       }catch(e){
-         res.send(404).send(e);
+         res.send(500).send(e);
       }
 
    });

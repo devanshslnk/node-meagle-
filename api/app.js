@@ -4,7 +4,7 @@ const mongoose=require("./config/database");
 
 const { User }=require("./models");
 const { Login ,Access}  =require("./controllers/User")
-const {Upload}=require("./controllers/Memes");
+const {Upload ,Fetch}=require("./controllers/Memes");
 
 const app=express()
 
@@ -12,8 +12,15 @@ app.use(bparser.json())
 app.use(function(req, res, next) {
    res.header("Access-Control-Allow-Origin", "*"); 
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,x-access-token,x-refresh-token,_id");
+
    res.header("Access-Control-Expose-Headers","x-access-token,x-refresh-token");
+   res.header("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT");
+   
    next();
+});
+app.options("*",(req,res)=>{
+   res.sendStatus(200);
+
 });
 
 app.use("/uploaded_memes",express.static('uploaded_memes'));
@@ -42,7 +49,7 @@ app.get("/testing", async (req,res)=>{
    // const subscriptions=user[0].subscriptions
    // subscriptions.forEach((user)=>{
    //    console.log(user.name)
-   // })
+   // }) 
    res.json({status:"working"});
 })
 app.get("/",(req,res)=>{
@@ -54,6 +61,7 @@ app.get("/",(req,res)=>{
 Login(app);
 Access(app);
 Upload(app);
+Fetch(app);
 
 app.listen(3000,()=>{
    console.log("server starting")

@@ -28,11 +28,14 @@ export class LoginService {
     localStorage.removeItem("_id");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+
     
   }
 
   logout(){
     this.removeSession();
+                        
+    
   }
 
 }
