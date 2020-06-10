@@ -1,14 +1,15 @@
 <div class="container" >
    <h2>All Images</h2>
    <div class="images-view" >
-      <div *ngFor="let meme of memeData" style="display:block; text-align:left; padding-top: 20px;">
-         <img src="{{ROOT_MEME_URL}}/{{meme.path}}" style="height:400px; width:400px;"/>
-         <div class="like" style="padding-top: 5px;">
-            <a class="waves-effect waves-light btn blue" (click)="onLikeClick(meme.imageId)">Like</a>
+      <div *ngFor="let meme of memeData" style="display:block; text-align:center; padding-top: 20px;">
+         <img src="{{ROOT_MEME_URL}}/{{meme.path}}" style="height:300px; width:300px;"/>
+         <div class="like" style="padding-top: 5px; text-align: left;">
+            
+            <button class="btn blue" style="margin-left: 35.5%;padding-bottom: 2px;" (click)="onLikeClick(meme.imageId)">Like</button>
          </div>
-         <div class="comment">
+         <div class="comment" style="text-align: left; margin-left: 35.5%;">
             Comment:
-            <input #commentText type="text" style="padding-bottom: 0px; margin-bottom: 0px;" placeholder="Write comment..."/>
+            <input #commentText type="text" style="padding-bottom: 0px; margin-bottom: 0px; width: 50%;" placeholder="Write comment..."/>
             <button class="btn" (click)="onComment(commentText.value,meme.imageId)">Post</button>
          </div>         
          <!-- <p>{{meme.path}}</p> -->
