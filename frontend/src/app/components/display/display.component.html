@@ -4,7 +4,7 @@
       <div *ngFor="let meme of memeData" style="display:block; text-align:left; padding-top: 20px;">
          <img src="{{ROOT_MEME_URL}}/{{meme.path}}" style="height:400px; width:400px;"/>
          <div class="like" style="padding-top: 5px;">
-            <a class="waves-effect waves-light btn blue" (click)="onLikeClick(meme.imageId)">Like</a>
+            <a #liked class="waves-effect waves-light btn green" (click)="onLikeClick(meme.imageId,liked)">Like</a>
          </div>
          <div class="comment">
             Comment:
